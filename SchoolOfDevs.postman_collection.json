@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "82b08854-20f7-4184-b74f-70598a945465",
+		"name": "SchoolOfDevs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\": \"Kaio\",\r\n\t\"lastName\": \"Marques\",\r\n\t\"age\": 23,\r\n\t\"userName\": \"Kaio.Marques\",\r\n\t\"password\": \"4591\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n\t\"firstName\": \"Kaio\",\r\n\t\"lastName\": \"Marques\",\r\n\t\"age\": 23,\r\n\t\"userName\": \"Kaio.Marques\",\r\n\t\"password\": \"4591\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/user/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Note",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\": \"Kaio\",\r\n\t\"lastName\": \"Marques\",\r\n\t\"age\": 23,\r\n\t\"userName\": \"Kaio.Marques\",\r\n\t\"password\": \"4591\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"value\": 2.0\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/note/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"note",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\": \"Kaio\",\r\n\t\"lastName\": \"Marques\",\r\n\t\"age\": 23,\r\n\t\"userName\": \"Kaio.Marques\",\r\n\t\"password\": \"4591\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n\t\"name\": \"Curso de Node.js\",\r\n    \"price\": 223\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7109/api/course/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"course",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7109/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7109",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
