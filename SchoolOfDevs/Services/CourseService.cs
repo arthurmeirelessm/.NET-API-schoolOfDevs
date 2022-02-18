@@ -69,14 +69,15 @@ namespace SchoolOfDevs.Services
             if (courseIn.Id != id)
                 throw new Exception("Route id differs Course id");
 
-            Course userDb = await _context.Courses
+            Course courseDb = await _context.Courses
                 .AsNoTracking()
                  .SingleOrDefaultAsync(u => u.Id == id);
 
-            if (userDb is null)
-            {
+            if (courseDb is null)
                 throw new Exception($"Course {id} not found");
-            }
+            
+
+            courseIn.CreatedAt = courseDb.CreatedAt;
 
             //ENTRY() E ()ENTITYSTATE.MODIFIED PARA METODOS UPDATE
             _context.Entry(courseIn).State = EntityState.Modified;

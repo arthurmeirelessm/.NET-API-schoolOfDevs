@@ -78,6 +78,8 @@ namespace SchoolOfDevs.Services
                 throw new Exception($"Note {id} not found");
             }
 
+            userIn.CreatedAt = userDb.CreatedAt;
+
             //ENTRY() E ()ENTITYSTATE.MODIFIED PARA METODOS UPDATE
             _context.Entry(userIn).State = EntityState.Modified;
             await _context.SaveChangesAsync();
