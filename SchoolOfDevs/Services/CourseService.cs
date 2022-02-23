@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolOfDevs.Entities;
+using SchoolOfDevs.Exceptions;
 using SchoolOfDevs.Helpers;
 
 
@@ -40,7 +41,7 @@ namespace SchoolOfDevs.Services
 
             if (courseDb is null)
             {
-                throw new Exception($"Course {id} not found");
+                throw new KeyNotFoundException($"Course {id} not found");
             }
             //CASO NÃO EXISTA O ID PASSADO, ELE IRÁ REMOVER COMO É FEITO ABAIXO PELO METODO 'REMOVE()'
             _context.Courses.Remove(courseDb);
@@ -58,7 +59,7 @@ namespace SchoolOfDevs.Services
 
             if (courseDb is null)
             {
-                throw new Exception($"Course {id} not found");
+                throw new KeyNotFoundException($"Course {id} not found");
             }
 
             return courseDb;
@@ -67,14 +68,14 @@ namespace SchoolOfDevs.Services
         public async Task Update(Course courseIn, int id)
         {
             if (courseIn.Id != id)
-                throw new Exception("Route id differs Course id");
+                throw new BadRequestException("Route id differs Course id");
 
             Course courseDb = await _context.Courses
                 .AsNoTracking()
                  .SingleOrDefaultAsync(u => u.Id == id);
 
             if (courseDb is null)
-                throw new Exception($"Course {id} not found");
+                throw new KeyNotFoundException($"Course {id} not found");
             
 
             courseIn.CreatedAt = courseDb.CreatedAt;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolOfDevs.Entities;
+using SchoolOfDevs.Exceptions;
 using SchoolOfDevs.Helpers;
 using BC = BCrypt.Net.BCrypt;
 
@@ -29,7 +30,7 @@ namespace SchoolOfDevs.Services
         {
 
             if (!user.Password.Equals(user.ConfirmPassword))
-                throw new Exception("Password does not match ConfirmPassword");
+                throw new BadRequestException("Password does not match ConfirmPassword");
 
             //ESSE METODO ASYNC TEM O OBJETIVO DE PUXAR E VALIDAR SE EXISTE UM NOME NOME IGUAL AO QUE FOI PASSADO NO PARAMETRO (PERCEBE-SE QUE ALGO PARECIDO COM O FILTER DE JS É USADO
             User userDb = await _context.Users
@@ -37,7 +38,7 @@ namespace SchoolOfDevs.Services
                 .SingleOrDefaultAsync(u => u.UserName == user.UserName);
 
             if (userDb is not null)
-                throw new Exception($"UserName {user.UserName} already exist");
+                throw new BadRequestException($"UserName {user.UserName} already exist");
 
             user.Password = BC.HashPassword(user.Password);
 
@@ -55,7 +56,7 @@ namespace SchoolOfDevs.Services
 
             if (userDb is null)
             {
-                throw new Exception($"User {id} not found");
+                throw new KeyNotFoundException($"User {id} not found");
             }
             //CASO NÃO EXISTA O ID PASSADO, ELE IRÁ REMOVER COMO É FEITO ABAIXO PELO METODO 'REMOVE()'
             _context.Users.Remove(userDb);
@@ -73,7 +74,7 @@ namespace SchoolOfDevs.Services
 
             if (userDb is null)
             {
-                throw new Exception($"User {id} not found");
+                throw new KeyNotFoundException($"User {id} not found");
             }
 
             return userDb;
@@ -83,19 +84,19 @@ namespace SchoolOfDevs.Services
         {
 
             if (userIn.Id != id)
-                throw new Exception("Route id differs user id");
+                throw new BadRequestException("Route id differs user id");
 
             else if (!userIn.Password.Equals(userIn.ConfirmPassword))
-                throw new Exception("Password does not match ConfirmPassword");
+                throw new BadRequestException("Password does not match ConfirmPassword");
 
             User userDb = await _context.Users
                 .AsNoTracking()
                  .SingleOrDefaultAsync(u => u.Id == id);
 
             if (userDb is null)
-                throw new Exception($"User {id} not found");
+                throw new BadRequestException($"User {id} not found");
             else if (BC.Verify(userIn.CurrentPassword, userIn.Password))
-                throw new Exception ("Incorret password");
+                throw new BadRequestException ("Incorret password");
 
 
             userIn.CreatedAt = userDb.CreatedAt;
