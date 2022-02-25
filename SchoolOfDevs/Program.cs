@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SchoolOfDevs.Helpers;
 using SchoolOfDevs.Middleware;
+using SchoolOfDevs.Profiles;
 using SchoolOfDevs.Services;
 using System.Text.Json.Serialization;
 
@@ -22,6 +24,11 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect")
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+
+
+var mapperConfig = MapperConfig.GetMapperConfig();
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
