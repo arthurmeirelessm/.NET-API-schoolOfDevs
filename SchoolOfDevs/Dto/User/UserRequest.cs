@@ -11,8 +11,7 @@ namespace SchoolOfDevs.Dto.User
         public int Age { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        [NotMapped]
-        public string ConfirmPassword { get; set; }
+         public string ConfirmPassword { get; set; }
         public TypeUser TypeUser { get; set; }
         public int[] CoursesStudingIds { get; set; }
 

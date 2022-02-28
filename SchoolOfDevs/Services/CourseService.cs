@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using SchoolOfDevs.Dto.Course;
 using SchoolOfDevs.Entities;
 using SchoolOfDevs.Exceptions;
 using SchoolOfDevs.Helpers;
@@ -10,28 +12,32 @@ namespace SchoolOfDevs.Services
 
     public interface ICourseService
     {
-        public Task<Course> Create(Course course);
-        public Task<Course> GetById(int id);
-        public Task<List<Course>> GetAll();
-        public Task Update (Course courseIn, int id);
+        public Task<CourseResponse> Create(CourseRequest user);
+        public Task<CourseResponse> GetById(int id);
+        public Task<List<CourseResponse>> GetAll();
+        public Task Update (CourseRequest userIn, int id);
         public Task Delete(int id);
 
     }
     public class CourseService : ICourseService
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public CourseService(DataContext context)
+        public CourseService(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<Course> Create(Course course)
+        public async Task<CourseResponse> Create(CourseRequest courseRequest)
         {
+            Course course = _mapper.Map<Course>(courseRequest);
+
             _context.Courses.Add(course);
            await _context.SaveChangesAsync();
 
-            return course;
+            return _mapper.Map<CourseResponse>(course);
         }
 
         public async Task Delete(int id)
@@ -50,24 +56,27 @@ namespace SchoolOfDevs.Services
 
         //BUSCA A TABELA TODA E RETORNA COMO LISTA
         //NO GETTALL É USADO ARROW FUNCTION PELO FATO DE TER PRECISO DE APENAS UMA LINHA PARA INCREMENTAR O METODO, COMO É VISTO ABAIXO:
-        public async Task<List<Course>> GetAll() =>  await _context.Courses.ToListAsync();
-
-        public async Task<Course> GetById(int id)
+        public async Task<List<CourseResponse>> GetAll()
         {
-            Course courseDb = await _context.Courses
-               .SingleOrDefaultAsync(u => u.Id == id);
+          List<Course> courses = await _context.Courses.ToListAsync();
+            return courses.Select(c => _mapper.Map<CourseResponse>(c)).ToList();
+        }
+
+        public async Task<CourseResponse> GetById(int id)
+        {
+            Course courseDb = await _context.Courses.Include(c => c.Teacher).SingleOrDefaultAsync(u => u.Id == id);
 
             if (courseDb is null)
             {
                 throw new KeyNotFoundException($"Course {id} not found");
             }
 
-            return courseDb;
+            return _mapper.Map<CourseResponse>(courseDb);
         }
 
-        public async Task Update(Course courseIn, int id)
+        public async Task Update(CourseRequest courseRequest, int id)
         {
-            if (courseIn.Id != id)
+            if (courseRequest.Id != id)
                 throw new BadRequestException("Route id differs Course id");
 
             Course courseDb = await _context.Courses
@@ -76,12 +85,11 @@ namespace SchoolOfDevs.Services
 
             if (courseDb is null)
                 throw new KeyNotFoundException($"Course {id} not found");
-            
 
-            courseIn.CreatedAt = courseDb.CreatedAt;
+            courseDb = _mapper.Map<Course>(courseRequest);
 
             //ENTRY() E ()ENTITYSTATE.MODIFIED PARA METODOS UPDATE
-            _context.Entry(courseIn).State = EntityState.Modified;
+            _context.Entry(courseDb).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

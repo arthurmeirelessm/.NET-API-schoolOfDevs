@@ -1,4 +1,5 @@
-﻿using SchoolOfDevs.Entities;
+﻿using SchoolOfDevs.Dto.Course;
+using SchoolOfDevs.Entities;
 using SchoolOfDevs.Enuns;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,7 @@ namespace SchoolOfDevs.Dto.User
         public TypeUser TypeUser { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
-        public List<Course> CoursesStuding { get; set; } // typeUser == Student
-        public List<Course> CoursesTeaching { get; set; } // typeUser == Teacher
+        public List<Entities.Course> CoursesStuding { get; set; } // typeUser == Student
+        public List<Entities.Course> CoursesTeaching { get; set; } // typeUser == Teacher
     }
 }

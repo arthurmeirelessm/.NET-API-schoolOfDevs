@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SchoolOfDevs.Dto.Course;
 using SchoolOfDevs.Entities;
 using SchoolOfDevs.Services;
 
@@ -17,7 +18,7 @@ namespace SchoolOfDevs.Controllers
 
         //AQUI ABAIXO É SETADO QUAL TIPO DE METODO VAI SER CHAMADO DO ICourseSERVICE(QUE CHAMA OS TIPOS SE SAO CREATE, GETALL, UPDATE) PARA A CRIAÇÃO DO ENDPOINT 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Course course) => Ok(await _service.Create(course));
+        public async Task<IActionResult> Create([FromBody] CourseRequest course) => Ok(await _service.Create(course));
 
         [HttpGet]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAll());
@@ -28,7 +29,7 @@ namespace SchoolOfDevs.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update([FromBody] Course course, int id)
+        public async Task<IActionResult> Update([FromBody] CourseRequest course, int id)
         {
             await _service.Update(course, id);
             return NoContent();
