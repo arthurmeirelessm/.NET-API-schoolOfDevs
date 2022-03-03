@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolOfDevs.Authorization;
 using SchoolOfDevs.Dto.User;
 using SchoolOfDevs.Entities;
+using SchoolOfDevs.Enuns;
 using SchoolOfDevs.Services;
 
 namespace SchoolOfDevs.Controllers
@@ -26,6 +27,7 @@ namespace SchoolOfDevs.Controllers
         [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest request) => Ok(await _service.Authenticate(request));
 
+        
         [HttpGet]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAll());
 

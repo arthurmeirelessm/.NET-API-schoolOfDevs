@@ -24,6 +24,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect")
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 
+builder.Services.AddHttpContextAccessor();
+
+
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<INoteService, NoteService>();

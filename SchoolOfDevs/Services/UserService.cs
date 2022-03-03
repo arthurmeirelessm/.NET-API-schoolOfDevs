@@ -25,12 +25,14 @@ namespace SchoolOfDevs.Services
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(DataContext context, IMapper mapper, IJwtService jwtService)
+        public UserService(DataContext context, IMapper mapper, IJwtService jwtService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
             _jwtService = jwtService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
@@ -121,7 +123,7 @@ namespace SchoolOfDevs.Services
 
         public async Task Update(UserRequestUpdate userRequest, int id)
         {
-
+           
             if (userRequest.Id != id)
                 throw new BadRequestException("Route id differs user id");
 
@@ -132,10 +134,15 @@ namespace SchoolOfDevs.Services
                 .Include(e => e.CoursesStuding) // Studing
                 .SingleOrDefaultAsync(u => u.Id == id);
 
+            UserResponse currentUser = (UserResponse)_httpContextAccessor?.HttpContext?.Items["User"];
+
+
             if (userDb is null)
                 throw new BadRequestException($"User {id} not found");
+            else if (currentUser?.Id != userDb.Id)
+                throw new ForbiddenException("Forbidden");
             else if (BC.Verify(userRequest.CurrentPassword, userDb.Password))
-                throw new BadRequestException ("Incorret password");
+                throw new BadRequestException("Incorret password");
 
 
             await AddOrRemoveCourse(userDb, userRequest.CoursesStudingIds);
