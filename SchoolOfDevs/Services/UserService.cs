@@ -12,6 +12,7 @@ namespace SchoolOfDevs.Services
 
     public interface IUserService
     {
+        public Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
         public Task<UserResponse> Create(UserRequest userRequest);
         public Task<UserResponse> GetById(int id);
         public Task<List<UserResponse>> GetAll();
@@ -23,11 +24,27 @@ namespace SchoolOfDevs.Services
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public UserService(DataContext context, IMapper mapper)
+        public UserService(DataContext context, IMapper mapper, IJwtService jwtService)
         {
             _context = context;
             _mapper = mapper;
+            _jwtService = jwtService;
+        }
+
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
+        {      User userDb = await _context.Users
+                .SingleOrDefaultAsync(u => u.UserName == request.UserName);
+
+            if (userDb is null)
+                throw new BadRequestException($"User {request.UserName} not found");
+
+            else if (!BC.Verify(request.Password, userDb.Password))
+                throw new BadRequestException("Incorret password");
+            string token = _jwtService.GenerateJwtToken(userDb);
+            return new AuthenticateResponse(userDb, token);
+
         }
 
         public async Task<UserResponse> Create(UserRequest userRequest)

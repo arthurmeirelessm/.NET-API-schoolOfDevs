@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SchoolOfDevs.Dto.Note;
+using SchoolOfDevs.Dto.User;
 using SchoolOfDevs.Entities;
 using SchoolOfDevs.Exceptions;
 using SchoolOfDevs.Helpers;
+using BC = BCrypt.Net.BCrypt;
 
 
 // NO SERVICES TEREMOS O CÉREBRO DA API, ONDE FAZEMOS TODOS OS PUSHS DE ELEMENTOS DO SQL SERVER E MONTAR COMO UMA CONSULTA
@@ -11,7 +13,7 @@ namespace SchoolOfDevs.Services
 {
 
     public interface INoteService
-    {
+    { 
         public Task<NoteResponse> Create(NoteRequest note);
         public Task<NoteResponse> GetById(int id);
         public Task<List<NoteResponse>> GetAll();
@@ -23,12 +25,16 @@ namespace SchoolOfDevs.Services
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        
 
         public NoteService(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+           
         }
+
+ 
 
         public async Task<NoteResponse> Create(NoteRequest noteRequest)
         {

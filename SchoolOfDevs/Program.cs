@@ -21,6 +21,10 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<DataContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect")));
 
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
@@ -42,6 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 

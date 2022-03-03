@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SchoolOfDevs.Dto.Course;
+using SchoolOfDevs.Dto.User;
 using SchoolOfDevs.Entities;
 using SchoolOfDevs.Exceptions;
 using SchoolOfDevs.Helpers;
@@ -17,7 +18,7 @@ namespace SchoolOfDevs.Services
         public Task<List<CourseResponse>> GetAll();
         public Task Update (CourseRequest userIn, int id);
         public Task Delete(int id);
-
+        
     }
     public class CourseService : ICourseService
     {
